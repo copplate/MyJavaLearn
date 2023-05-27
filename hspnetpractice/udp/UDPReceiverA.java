@@ -1,17 +1,19 @@
-package com.wlearn.udp;
+package com.hspnetpractice.udp;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 
 /**
+ * 2023/05/26
  * UDP接收端（注：接收端也可以当发送端，只不过这里为了区分就给了不同的名字）
  * */
 public class UDPReceiverA {
     public static void main(String[] args) throws IOException {
         //1、创建一个DatagramSocket对象，准备在9999端口接收数据
-        DatagramSocket socket = new DatagramSocket();
+        DatagramSocket socket = new DatagramSocket(9999);
         //2、构建一个DatagramPacket对象，准备接收数据
         //前面讲UDP协议时说过，一个数据包最大64K
         byte[] buf = new byte[1024];
@@ -30,6 +32,16 @@ public class UDPReceiverA {
         System.out.println(s);
 
         //5、关闭资源
+//        socket.close();
+//        System.out.println("A端退出");
+
+        //2、将需要发送的数据，封装到一个DatagramPacket对象中
+        byte[] data2 = "好的，明天见".getBytes();
+        DatagramPacket packet2 = new DatagramPacket(data2, data2.length, InetAddress.getByName("192.168.123.12"), 9998);
+
+        socket.send(packet2);
+
+        //关闭资源
         socket.close();
 
     }
