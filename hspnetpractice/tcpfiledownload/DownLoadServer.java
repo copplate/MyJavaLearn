@@ -1,6 +1,7 @@
-package com.wlearn.udp.hspnetpractice.tcpfiledownload;
+package com.hspnetpractice.tcpfiledownload;
 
-import com.wlearn.udp.hspnetpractice.upload.StreamUtils;
+
+import com.hspnetpractice.upload.StreamUtils;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -43,6 +44,15 @@ public class DownLoadServer {
         BufferedOutputStream bos =
                 new BufferedOutputStream(socket.getOutputStream());
         //7、写入到数据通道，返回给客户端
+        bos.write(bytes);
+        socket.shutdownOutput();//设置结束标记(很关键)
 
+        //8、关闭相关的资源
+        serverSocket.close();
+        socket.close();
+        inputStream.close();
+        bis.close();
+        bos.close();
+        System.out.println("服务端退出");
     }
 }
