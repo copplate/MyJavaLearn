@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 
-//jdbc第二部分，jdbc的练习
+//jdbc第二部分，Statement的练习
 public class StatementPrac {
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/wyc_db01",
