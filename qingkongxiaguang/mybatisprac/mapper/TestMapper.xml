@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--关联起来之后，建议把此xml文件和接口放在同级目录下，把它作为jar包内部的一个东西-->
+<mapper namespace="com.qingkongxiaguangweb.mybatis_.mapper.TestMapper">
+<!--
+    <resultMap id="Test" type="Student">
+        <result column="sid" property="studentId"/>
+
+    </resultMap>
+-->
+<!--
+    <select id="selectStudent" resultMap="Test">
+        select * from student
+    </select>
+-->
+<!--    这个select的属性  id是要和TestMapper里的方法名字保持一致的-->
+    <select id="selectStudent" resultType="Student">
+        select * from student
+    </select>
+    <select id="getStudentBySid" resultType="Student">
+
+    </select>
+    <insert id="addStudent" >
+        insert into student(name,sex) values(#{name},#{sex})
+    </insert>
+
+    <select id="getTeacherByTid" resultMap="asTeacher">
+        select *, teacher.name as tname from student inner join teachrelation on student.sid = teachrelation.sid
+                            inner join teacher on teachrelation.tid = teacher.tid where teachrelation.tid = #{tid}
+    </select>
+    <resultMap id="asTeacher" type="Teacher">
+        <id column="tid" property="tid"/>
+        <result column="tname" property="name"/>
+        <collection property="studentList" ofType="Student">
+            <id property="sid" column="sid"/>
+            <result column="name" property="name"/>
+            <result column="sex" property="sex"/>
+
+        </collection>
+
+    </resultMap>
+
+</mapper>
